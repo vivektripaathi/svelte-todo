@@ -68,13 +68,15 @@ self.addEventListener('fetch', async event => {
 			}
 
 			return response
-		} catch {
+		} catch (err) {
 			//fallback to the cache
 			const cachedResponse = await cache.match(event.request);
 			if (cachedResponse) return cachedResponse;
+			//if no cache found throw regular error
+			throw err;
 		}
 
-		return new Response('This site can’t be reached :(', { status: 404 })
+		// return new Response('This site can’t be reached :(', { status: 404 })
 	}
 
 	event.respondWith(respond())
