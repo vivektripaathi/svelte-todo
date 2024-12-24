@@ -39,3 +39,43 @@ self.addEventListener('activate', (event) => {
 
 	event.waitUntil(deleteOldCaches());
 });
+
+
+// listen to fetch events
+
+self.addEventListener('fetch', async event => {
+	if(event.request.method !== 'GET') return;
+
+	async function respond() {
+		const url = new URL(event.request.url)
+		const cache = await caches.open(CACHE)
+
+		//serve build files from cache
+		if(ASSETS.includes(url.pathname)) {
+			const cachedResponse = await cache.match(url.pathname);
+			if (cachedResponse) return cachedResponse;
+		}
+
+		// for everything else, try the network first, but
+		// fall back to the cache if we're offline
+		try {
+			const response = await fetch(event.request);
+			const isNotExtenstion = url.protocol === 'http:';
+			const isSuccess = response.status === 200;
+
+			if(isNotExtenstion && isSuccess) {
+				cache.put(event.request, response.clone());
+			}
+
+			return response
+		} catch {
+			//fallback to the cache
+			const cachedResponse = await cache.match(event.request);
+			if (cachedResponse) return cachedResponse;
+		}
+
+		return new Response('This site can’t be reached :(', { status: 404 })
+	}
+
+	event.respondWith(respond())
+})
