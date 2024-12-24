@@ -1,15 +1,27 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <head>
+        <meta charset="utf-8" />
+        <link rel="icon" href="%sveltekit.assets%/favicon.png" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="manifest" href="%sveltekit.assets%/manifest.json" />
-		%sveltekit.head%
-	</head>
-	<body data-sveltekit-preload-data="hover">
-		<div style="display: contents">%sveltekit.body%</div>
-	</body>
+        <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+        %sveltekit.head%
+    </head>
+    <body data-sveltekit-preload-data="hover">
+        <div style="display: contents">%sveltekit.body%</div>
+    </body>
+
+    <nav class="fixed bottom-0 left-0 w-full shadow-lg" style="background-color: #e4e9fd;box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.1);">
+        <ul class="flex justify-around items-center py-3">
+            <li>
+                <a href="/" class="text-lg hover:text-gray-400"> Todos </a>
+            </li>
+            <li>
+                <a href="/about" class="text-lg hover:text-gray-400"> About </a>
+            </li>
+        </ul>
+    </nav>
 </html>
 
 <style>
