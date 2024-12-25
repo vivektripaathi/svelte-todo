@@ -1,4 +1,5 @@
 <script>
+    import Todo from './todo.svelte'
 
     const options = {
         weekday: "long",
@@ -38,14 +39,7 @@
     <h1>{today}</h1>
 
     {#each todos as todo}
-        <div class="item">
-            <input
-                type="checkbox"
-                checked={todo.done}
-                onchange={() => toggleDone(todo)}
-            />
-            <p class:done={todo.done}>{todo.text}</p>
-        </div>
+        <Todo {todo} toggleDone={toggleDone} />
     {/each}
 
     <form onsubmit={addTodo} class="item">
